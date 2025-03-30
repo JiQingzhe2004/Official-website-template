@@ -1,0 +1,19 @@
+/* 应用全局样式 */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 为内容区添加上边距，防止被顶部导航栏遮挡 */
+.content {
+  flex: 1;
+  padding-top: 80px; /* 根据导航栏高度调整此值 */
+}
+
+/* 页面锚点跳转时的平滑滚动设置 */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* 确保锚点定位时不被导航栏遮挡 */
+}
+
