@@ -53,7 +53,7 @@ class EmailService {
         <title>新的留言通知</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body style="margin: 0; padding: 0; font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333333; background-color: #f4f7fa;">
+      <body style="margin: 0; padding: 0; font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif; font-size: 17px; line-height: 1.6; color: #333333; background-color: #f4f7fa;">
         <table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#f4f7fa">
           <tr>
             <td align="center" style="padding: 20px 0;">
@@ -61,23 +61,23 @@ class EmailService {
                 <!-- 页眉 -->
                 <tr>
                   <td align="center" style="padding: 30px 20px; background: linear-gradient(135deg, #1890ff, #36cfc9); color: #ffffff; border-top-left-radius: 8px; border-top-right-radius: 8px;">
-                    <h1 style="margin: 0; font-size: 28px; font-weight: 700;">新的官网留言</h1>
+                    <h1 style="margin: 0; font-size: 30px; font-weight: 700;">新的官网留言</h1>
                   </td>
                 </tr>
                 
                 <!-- 内容区 -->
                 <tr>
                   <td style="padding: 30px 25px;">
-                    <p style="font-size: 18px; margin-bottom: 20px; color: #333333;">您好，管理员：</p>
-                    <p style="margin: 10px 0;">网站刚刚收到了一条新的留言，详细信息如下：</p>
+                    <p style="font-size: 20px; margin-bottom: 20px; color: #333333;">您好，管理员：</p>
+                    <p style="margin: 10px 0; font-size: 18px;">网站刚刚收到了一条新的留言，详细信息如下：</p>
                     
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f9f9f9; margin: 20px 0; border-radius: 4px;">
                       <tr>
                         <td style="padding: 15px;">
-                          <p style="margin: 5px 0;"><strong>姓名:</strong> ${name}</p>
-                          <p style="margin: 5px 0;"><strong>邮箱:</strong> ${email}</p>
-                          <p style="margin: 5px 0;"><strong>电话:</strong> ${phone || '未提供'}</p>
-                          <p style="margin: 5px 0;"><strong>时间:</strong> ${new Date().toLocaleString()}</p>
+                          <p style="margin: 5px 0; font-size: 18px;"><strong>姓名:</strong> ${name}</p>
+                          <p style="margin: 5px 0; font-size: 18px;"><strong>邮箱:</strong> ${email}</p>
+                          <p style="margin: 5px 0; font-size: 18px;"><strong>电话:</strong> ${phone || '未提供'}</p>
+                          <p style="margin: 5px 0; font-size: 18px;"><strong>时间:</strong> ${new Date().toLocaleString()}</p>
                         </td>
                       </tr>
                     </table>
@@ -85,18 +85,18 @@ class EmailService {
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8f8f8; border-left: 4px solid #1890ff; margin: 20px 0; border-radius: 4px;">
                       <tr>
                         <td style="padding: 20px;">
-                          <p style="font-weight: 600; margin-bottom: 8px; color: #333333;">主题: ${subject}</p>
-                          <div style="color: #444444; line-height: 1.5;">${message.replace(/\n/g, '<br/>')}</div>
+                          <p style="font-weight: 600; margin-bottom: 8px; color: #333333; font-size: 18px;">主题: ${subject}</p>
+                          <div style="color: #444444; line-height: 1.5; font-size: 17px;">${message.replace(/\n/g, '<br/>')}</div>
                         </td>
                       </tr>
                     </table>
                     
-                    <p style="margin: 10px 0;">请及时处理该留言并与客户取得联系。</p>
+                    <p style="margin: 10px 0; font-size: 18px;">请及时处理该留言并与客户取得联系。</p>
                     
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td style="padding: 15px 0;">
-                          <a href="mailto:${email}" style="display: inline-block; background-color: #1890ff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">回复此留言</a>
+                          <a href="mailto:${email}" style="display: inline-block; background-color: #1890ff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 17px;">回复此留言</a>
                         </td>
                       </tr>
                     </table>
@@ -105,8 +105,8 @@ class EmailService {
                 
                 <!-- 页脚 -->
                 <tr>
-                  <td style="background-color: #f4f7fa; padding: 20px; text-align: center; font-size: 13px; color: #666666; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
-                    <p style="margin-top: 15px; font-size: 12px; color: #888888;">${copyright}</p>
+                  <td style="background-color: #f4f7fa; padding: 20px; text-align: center; font-size: 14px; color: #666666; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                    <p style="margin-top: 15px; font-size: 14px; color: #888888;">${copyright}</p>
                   </td>
                 </tr>
               </table>
@@ -134,7 +134,7 @@ class EmailService {
         <title>感谢您的留言</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body style="margin: 0; padding: 0; font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333333; background-color: #f4f7fa;">
+      <body style="margin: 0; padding: 0; font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif; font-size: 17px; line-height: 1.6; color: #333333; background-color: #f4f7fa;">
         <table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#f4f7fa">
           <tr>
             <td align="center" style="padding: 20px 0;">
@@ -142,44 +142,44 @@ class EmailService {
                 <!-- 页眉 -->
                 <tr>
                   <td align="center" style="padding: 30px 20px; background: linear-gradient(135deg, #1890ff, #36cfc9); color: #ffffff; border-top-left-radius: 8px; border-top-right-radius: 8px;">
-                    <h1 style="margin: 0; font-size: 28px; font-weight: 700;">感谢您的留言</h1>
+                    <h1 style="margin: 0; font-size: 30px; font-weight: 700;">感谢您的留言</h1>
                   </td>
                 </tr>
                 
                 <!-- 内容区 -->
                 <tr>
                   <td style="padding: 30px 25px;">
-                    <p style="font-size: 18px; margin-bottom: 20px; color: #333333;">尊敬的 ${name}：</p>
-                    <p style="margin: 10px 0;">感谢您通过我们的官网联系表单与我们取得联系。我们已收到您的留言，内容如下：</p>
+                    <p style="font-size: 20px; margin-bottom: 20px; color: #333333;">尊敬的 ${name}：</p>
+                    <p style="margin: 10px 0; font-size: 18px;">感谢您通过我们的官网联系表单与我们取得联系。我们已收到您的留言，内容如下：</p>
                     
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8f8f8; border-left: 4px solid #1890ff; margin: 20px 0; border-radius: 4px;">
                       <tr>
                         <td style="padding: 20px;">
-                          <p style="font-weight: 600; margin-bottom: 8px; color: #333333;">主题: ${subject}</p>
-                          <div style="color: #444444; line-height: 1.5;">${message.replace(/\n/g, '<br/>')}</div>
+                          <p style="font-weight: 600; margin-bottom: 8px; color: #333333; font-size: 18px;">主题: ${subject}</p>
+                          <div style="color: #444444; line-height: 1.5; font-size: 17px;">${message.replace(/\n/g, '<br/>')}</div>
                         </td>
                       </tr>
                     </table>
                     
-                    <p style="margin: 10px 0;">我们的团队将尽快审阅您的留言，并在24小时内与您联系。</p>
+                    <p style="margin: 10px 0; font-size: 18px;">我们的团队将尽快审阅您的留言，并在24小时内与您联系。</p>
                     
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f9f9f9; margin: 20px 0; border-radius: 4px;">
                       <tr>
                         <td style="padding: 15px;">
-                          <p style="margin: 5px 0;">如有紧急事项，您也可以通过以下方式联系我们：</p>
-                          <p style="margin: 5px 0;">📞 电话: +86 15670141215</p>
-                          <p style="margin: 5px 0;">📧 邮箱: jqz1215@qq.com</p>
-                          <p style="margin: 5px 0;">🌐 网站: <a href="https://www.aiqji.cn" style="color: #1890ff; text-decoration: none;">https://www.aiqji.cn</a></p>
+                          <p style="margin: 5px 0; font-size: 17px;">如有紧急事项，您也可以通过以下方式联系我们：</p>
+                          <p style="margin: 5px 0; font-size: 17px;">📞 电话: +86 15670141215</p>
+                          <p style="margin: 5px 0; font-size: 17px;">📧 邮箱: jqz1215@qq.com</p>
+                          <p style="margin: 5px 0; font-size: 17px;">🌐 网站: <a href="https://www.aiqji.cn" style="color: #1890ff; text-decoration: none;">https://www.aiqji.cn</a></p>
                         </td>
                       </tr>
                     </table>
                     
-                    <p style="margin: 10px 0;">再次感谢您的关注与支持！</p>
+                    <p style="margin: 10px 0; font-size: 18px;">再次感谢您的关注与支持！</p>
                     
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td style="padding: 15px 0;">
-                          <a href="https://www.aiqji.cn/about" style="display: inline-block; background-color: #1890ff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold;">了解更多关于我们</a>
+                          <a href="https://www.aiqji.cn/about" style="display: inline-block; background-color: #1890ff; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 17px;">了解更多关于我们</a>
                         </td>
                       </tr>
                     </table>
@@ -187,8 +187,8 @@ class EmailService {
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                       <tr>
                         <td style="border-top: 1px solid #eeeeee; padding-top: 20px; margin-top: 30px;">
-                          <p style="margin: 10px 0;">此致，</p>
-                          <p style="margin: 10px 0;"><strong>爱奇吉团队</strong></p>
+                          <p style="margin: 10px 0; font-size: 17px;">此致，</p>
+                          <p style="margin: 10px 0; font-size: 17px;"><strong>爱奇吉团队</strong></p>
                         </td>
                       </tr>
                     </table>
@@ -197,14 +197,14 @@ class EmailService {
                 
                 <!-- 页脚 -->
                 <tr>
-                  <td style="background-color: #f4f7fa; padding: 20px; text-align: center; font-size: 13px; color: #666666; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                  <td style="background-color: #f4f7fa; padding: 20px; text-align: center; font-size: 14px; color: #666666; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
                     <p style="margin-bottom: 15px;">
-                      <a href="https://www.aiqji.cn" style="color: #1890ff; text-decoration: none; margin: 0 10px;">官方网站</a> | 
-                      <a href="https://www.aiqji.cn/contact" style="color: #1890ff; text-decoration: none; margin: 0 10px;">联系我们</a> | 
-                      <a href="https://www.aiqji.cn/services" style="color: #1890ff; text-decoration: none; margin: 0 10px;">服务内容</a>
+                      <a href="https://www.aiqji.cn" style="color: #1890ff; text-decoration: none; margin: 0 10px; font-size: 15px;">官方网站</a> | 
+                      <a href="https://www.aiqji.cn/contact" style="color: #1890ff; text-decoration: none; margin: 0 10px; font-size: 15px;">联系我们</a> | 
+                      <a href="https://www.aiqji.cn/services" style="color: #1890ff; text-decoration: none; margin: 0 10px; font-size: 15px;">服务内容</a>
                     </p>
-                    <p style="margin-top: 15px; font-size: 12px; color: #888888;">${copyright}</p>
-                    <p style="font-size: 11px; color: #999999; margin-top: 15px;">此邮件由系统自动发送，请勿直接回复。</p>
+                    <p style="margin-top: 15px; font-size: 14px; color: #888888;">${copyright}</p>
+                    <p style="font-size: 13px; color: #999999; margin-top: 15px;">此邮件由系统自动发送，请勿直接回复。</p>
                   </td>
                 </tr>
               </table>
