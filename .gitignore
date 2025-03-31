@@ -28,5 +28,5 @@ dist-ssr
 nginx.conf
 config.js
 server/.env
-server/api/sendMail.js
 server/config/captcha.js
+server/.env.example
