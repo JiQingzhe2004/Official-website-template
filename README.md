@@ -112,3 +112,10 @@ https://您的域名/install
 ## 扩展ESLint配置
 
 如果你正在开发生产应用程序，我们建议使用TypeScript并启用类型感知的lint规则。查看[TS模板](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts)以在项目中集成TypeScript和[`typescript-eslint`](https://typescript-eslint.io)。
+
+
+# 移除所有文件的缓存（保留物理文件）
+git rm -r --cached .
+
+# 重新添加所有文件（此时 Git 会遵守 .gitignore）
+git add .

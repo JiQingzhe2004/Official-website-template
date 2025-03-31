@@ -13,12 +13,14 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Install from './pages/Install';
 import DynamicPage from './pages/DynamicPage';
+import DebugPanel from './components/DebugPanel';
 import { API_URL } from '../config';
 
 function App() {
   const [customPages, setCustomPages] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [siteConfig, setSiteConfig] = useState({});
+  const [showDebug, setShowDebug] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // 获取网站配置
   useEffect(() => {
@@ -47,8 +49,8 @@ function App() {
           // 检查数据是否为对象
           else if (data && typeof data === 'object') {
             configObject = data;
-            logo = data.site_logo || null;
-            title = data.site_name || '爱奇吉';
+            logo = data.site_logo?.value || null;
+            title = data.site_name?.value || '爱奇吉';
           }
           
           setSiteConfig({
@@ -86,6 +88,14 @@ function App() {
     fetchCustomPages();
   }, []);
 
+  // 检查URL是否包含debug=true参数
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('debug') === 'true') {
+      setShowDebug(true);
+    }
+  }, []);
+
   return (
     <Router>
       <div className="app">
@@ -99,17 +109,21 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/install" element={<Install />} />
+            <Route path="/debug" element={<DebugPanel />} /> {/* 修改为使用 DebugPanel 组件 */}
             {/* 动态加载自定义页面 */}
             {!loading && customPages.map(page => (
-              <Route 
-                key={page.id} 
-                path={`/${page.slug}`} 
-                element={<DynamicPage page={page} />} 
+              <Route
+                key={page.id}
+                path={`/${page.slug}`}
+                element={<DynamicPage page={page} />}
               />
             ))}
           </Routes>
         </div>
         <Footer />
+        
+        {/* 调试面板，可通过URL参数激活或在开发环境中显示 */}
+        {(showDebug || process.env.NODE_ENV === 'development') && <DebugPanel />}
       </div>
     </Router>
   );

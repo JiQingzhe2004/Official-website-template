@@ -256,7 +256,6 @@ const Navbar = ({ siteConfig: propsSiteConfig }) => {
             const sortedData = data.data.sort((a, b) => a.order - b.order);
             setMenuItems(sortedData);
           } else {
-            console.error('获取菜单项失败:', data.message);
             setDefaultMenuItems();
           }
         } else {

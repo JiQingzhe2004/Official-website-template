@@ -10,8 +10,40 @@ const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-// 联系表单邮件发送路由
-router.post('/sendMail', sendContactEmail);
+// 联系表单邮件发送路由 - 现在只保留路由逻辑，不包含具体实现
+router.post('/sendMail', async (req, res) => {
+  try {
+    console.log('Express API收到邮件请求');
+    
+    // 构造事件对象
+    const event = {
+      node: { req }
+    };
+    
+    // 调用邮件发送函数
+    const result = await sendContactEmail({ method: 'POST', body: req.body }, event);
+    console.log('邮件处理结果:', result);
+    
+    // 根据结果设置状态码和返回数据
+    if (result && result.statusCode) {
+      res.status(result.statusCode);
+    }
+    
+    // 返回响应
+    if (result && result.body) {
+      res.json(result.body);
+    } else {
+      res.json({ success: false, message: '处理请求时出错' });
+    }
+  } catch (error) {
+    console.error('请求处理失败:', error.message);
+    res.status(500).json({
+      success: false,
+      message: '服务器内部错误',
+      error: error.message || '未知错误'
+    });
+  }
+});
 
 // 尝试导入路由文件的函数
 const tryImportRoute = async (routeName) => {
@@ -118,6 +150,21 @@ router.get('/debug-endpoints', (req, res) => {
     message: '可用API端点',
     routes,
     apiPrefix: '/api'
+  });
+});
+
+// 添加调试端点，检查API是否正常加载
+router.get('/debug-mail-route', (req, res) => {
+  res.json({
+    success: true,
+    message: 'sendMail路由已正确加载',
+    timestamp: new Date().toISOString(),
+    availableRoutes: router.stack
+      .filter(r => r.route)
+      .map(r => ({
+        path: r.route.path,
+        methods: Object.keys(r.route.methods).filter(m => r.route.methods[m])
+      }))
   });
 });
 
