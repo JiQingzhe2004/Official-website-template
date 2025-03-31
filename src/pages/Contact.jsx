@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Row, Col, Form, Input, Button, Typography, Card, Divider, message, Spin, Result } from 'antd';
 import { MailOutlined, PhoneOutlined, EnvironmentOutlined, GlobalOutlined, SendOutlined } from '@ant-design/icons';
 // 引入IconPark的Tiktok图标
 import { Tiktok } from '@icon-park/react';
 import AMapLoader from '@amap/amap-jsapi-loader';
+import captchaConfig from '../../server/config/captcha'; // 修改引入路径
 
 const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
@@ -148,9 +149,49 @@ const Contact = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [captchaTicket, setCaptchaTicket] = useState(''); // 腾讯云验证码票据
+  const [captchaRandstr, setCaptchaRandstr] = useState(''); // 腾讯云验证码随机串
+
+  // 加载腾讯云验证码脚本
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://ssl.captcha.qq.com/TCaptcha.js";
+    script.async = true;
+    document.body.appendChild(script);
+    
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  // 显示腾讯云验证码
+  const showTencentCaptcha = () => {
+    if (window.TencentCaptcha) {
+      const captcha = new window.TencentCaptcha(
+        captchaConfig.appId, // 从配置文件读取AppID
+        (res) => {
+          if (res.ret === 0) {
+            // 验证成功
+            setCaptchaTicket(res.ticket);
+            setCaptchaRandstr(res.randstr);
+            message.success('验证成功');
+          }
+        }
+      );
+      captcha.show();
+    } else {
+      message.error('验证组件加载失败，请刷新页面重试');
+    }
+  };
 
   const onFinish = async (values) => {
     try {
+      // 检查验证码是否已通过
+      if (!captchaTicket || !captchaRandstr) {
+        message.error('请先完成验证码验证');
+        return;
+      }
+
       setLoading(true);
       console.log('提交的表单数据:', values);
       const response = await fetch('/api/sendMail', {
@@ -160,6 +201,8 @@ const Contact = () => {
         },
         body: JSON.stringify({
           ...values,
+          captchaTicket, // 替换为腾讯验证码票据
+          captchaRandstr, // 替换为腾讯验证码随机串
           timestamp: new Date().toISOString(),
           source: '官网联系表单'
         }),
@@ -171,6 +214,9 @@ const Contact = () => {
       message.success('您的留言已成功提交，我们会尽快与您联系！');
       setSubmitSuccess(true);
       form.resetFields();
+      // 重置验证状态
+      setCaptchaTicket('');
+      setCaptchaRandstr('');
     } catch (error) {
       console.error('提交表单时出错:', error);
       message.error('提交失败，请稍后重试或通过其他方式联系我们。');
@@ -181,6 +227,8 @@ const Contact = () => {
 
   const handleReset = () => {
     setSubmitSuccess(false);
+    setCaptchaTicket('');
+    setCaptchaRandstr('');
   };
 
   return (
@@ -329,12 +377,29 @@ const Contact = () => {
                 >
                   <TextArea rows={5} placeholder="请输入您的留言内容" />
                 </Form.Item>
+                
+                {/* 替换为腾讯云验证码按钮 */}
+                <Form.Item>
+                  <div style={{ marginBottom: 15 }}>
+                    <Button 
+                      type="default" 
+                      onClick={showTencentCaptcha} 
+                      style={{ marginRight: 15 }}
+                    >
+                      点击进行验证
+                    </Button>
+                    {captchaTicket && (
+                      <span style={{ color: 'green' }}>验证成功 ✓</span>
+                    )}
+                  </div>
+                </Form.Item>
+
                 <Form.Item>
                   <Button
                     type="primary" 
                     htmlType="submit" 
                     block 
-                    disabled={loading}
+                    disabled={loading || !captchaTicket}
                     icon={<SendOutlined />}
                   >
                     提交留言

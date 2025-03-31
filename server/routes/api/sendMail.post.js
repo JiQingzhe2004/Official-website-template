@@ -3,7 +3,7 @@ import { sendContactEmail } from '../../api/sendMail';
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
-    // 转发到处理函数
+    // 转发到处理函数，传递整个event对象以获取IP信息
     return sendContactEmail({ method: 'POST', body }, event);
   } catch (error) {
     console.error('处理sendMail请求时出错:', error);
