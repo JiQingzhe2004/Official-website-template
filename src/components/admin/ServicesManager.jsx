@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Button, Table, message, Modal, Popconfirm } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import * as AntIcons from '@ant-design/icons';
 import styled from 'styled-components';
 
 const { Title } = Typography;
@@ -9,16 +10,44 @@ const ActionButton = styled(Button)`
   margin-right: 8px;
 `;
 
+const IconPreview = styled.span`
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+`;
+
 const ServicesManager = ({ token, openEditModal, loading, API_URL }) => {
   const [services, setServices] = useState([]);
   const [localLoading, setLocalLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  // 获取图标组件函数 - 支持动态加载任何Ant Design图标
+  const getIconComponent = (iconName) => {
+    // 检查图标名称是否存在于AntIcons中
+    if (iconName && AntIcons[iconName]) {
+      const IconComponent = AntIcons[iconName];
+      return <IconComponent />;
+    }
+    
+    // 如果没有找到图标，则返回默认图标
+    return <AntIcons.AppstoreOutlined />;
+  };
   
   // 定义表格列
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: '标题', dataIndex: 'title', key: 'title' },
-    { title: '图标', dataIndex: 'icon', key: 'icon' },
+    { 
+      title: '图标', 
+      dataIndex: 'icon', 
+      key: 'icon',
+      render: (icon) => (
+        <IconPreview>
+          {getIconComponent(icon)}
+          <span style={{ marginLeft: '8px', fontSize: '14px' }}>{icon}</span>
+        </IconPreview>
+      )
+    },
     { title: '描述', dataIndex: 'description', key: 'description', ellipsis: true },
     {
       title: '操作',

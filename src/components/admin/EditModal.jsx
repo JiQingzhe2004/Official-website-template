@@ -1,6 +1,7 @@
-import React from 'react';
-import { Modal, Form, Input, Upload, message } from 'antd';
+import React, { useState } from 'react';
+import { Modal, Form, Input, Button, Upload, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import IconSelector from './IconSelector';  // 导入图标选择器组件
 
 const EditModal = ({ 
   visible, 
@@ -90,8 +91,13 @@ const EditModal = ({
             <Form.Item name="title" label="标题" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
-            <Form.Item name="icon" label="图标" rules={[{ required: true }]}>
-              <Input />
+            <Form.Item 
+              name="icon" 
+              label="图标" 
+              rules={[{ required: true, message: '请选择图标' }]}
+              tooltip="选择一个图标代表此服务"
+            >
+              <IconSelector />
             </Form.Item>
             <Form.Item name="description" label="描述" rules={[{ required: true }]}>
               <Input.TextArea rows={4} />

@@ -281,32 +281,32 @@ router.post('/init-data', async (req, res) => {
       }
     ]);
     
-    // 创建服务项目示例数据
+    // 创建服务示例数据
     await Service.bulkCreate([
       {
-        title: 'AI应用开发',
-        icon: 'code',
-        description: '专业的AI应用开发服务，包括自然语言处理、计算机视觉等领域的应用开发',
+        title: '网站开发',
+        icon: 'GlobalOutlined',  // 明确指定图标代码
+        description: '提供响应式网站设计与开发，确保在各种设备上都有出色的用户体验',
         order: 0,
         isActive: true
       },
       {
-        title: '数据分析服务',
-        icon: 'bar-chart',
-        description: '利用AI技术进行数据分析，帮助企业从数据中获取洞察和价值',
+        title: '应用程序开发',
+        icon: 'AppstoreOutlined',  // 明确指定图标代码
+        description: '开发高性能的移动应用和桌面应用，满足您的业务需求',
         order: 1,
         isActive: true
       },
       {
-        title: '智能客服系统',
-        icon: 'headset',
-        description: '基于AI的智能客服系统，提高客户服务效率和质量',
+        title: '技术咨询',
+        icon: 'ToolOutlined',  // 明确指定图标代码
+        description: '提供专业的技术咨询服务，帮助您制定最佳的技术战略和解决方案',
         order: 2,
         isActive: true
       },
       {
         title: 'AI培训课程',
-        icon: 'graduation-cap',
+        icon: 'RocketOutlined',  // 明确指定图标代码
         description: '提供AI相关技术培训，帮助企业培养AI人才',
         order: 3,
         isActive: true

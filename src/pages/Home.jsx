@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Carousel, Row, Col, Card, Button, Typography, Spin } from 'antd';
-import { RocketOutlined, ToolOutlined, TeamOutlined, GlobalOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import * as AntIcons from '@ant-design/icons';
 
 const { Title, Paragraph } = Typography;
 
@@ -425,20 +425,44 @@ const Home = () => {
     fetchCTA();
   }, []);
 
-  // 获取图标组件
-  const getIconComponent = (iconName) => {
-    switch (iconName) {
-      case 'GlobalOutlined':
-        return <GlobalOutlined />;
-      case 'RocketOutlined':
-        return <RocketOutlined />;
-      case 'ToolOutlined':
-        return <ToolOutlined />;
-      case 'TeamOutlined':
-        return <TeamOutlined />;
-      default:
-        return <GlobalOutlined />;
+  // 获取图标组件 - 完全重写为动态加载所有图标
+  const getIconComponent = (iconName, serviceTitle) => {
+    // 如果提供了图标名称，尝试直接从Ant Design库加载
+    if (iconName && AntIcons[iconName]) {
+      const IconComponent = AntIcons[iconName];
+      return <IconComponent />;
     }
+    
+    // 如果没有找到图标或者没有提供图标名称，根据服务标题智能选择
+    if (serviceTitle) {
+      const title = serviceTitle.toLowerCase();
+      
+      // 尝试基于标题智能匹配图标
+      if (title.includes('网站') || title.includes('网页')) {
+        return <AntIcons.GlobalOutlined />;
+      } else if (title.includes('应用') || title.includes('app')) {
+        return <AntIcons.AppstoreOutlined />;
+      } else if (title.includes('移动') || title.includes('手机')) {
+        return <AntIcons.MobileOutlined />;
+      } else if (title.includes('云') || title.includes('服务器')) {
+        return <AntIcons.CloudOutlined />;
+      } else if (title.includes('开发') || title.includes('编程')) {
+        return <AntIcons.CodeOutlined />;
+      } else if (title.includes('咨询') || title.includes('支持')) {
+        return <AntIcons.CustomerServiceOutlined />;
+      } else if (title.includes('安全') || title.includes('保护')) {
+        return <AntIcons.SafetyOutlined />;
+      } else if (title.includes('数据') || title.includes('数据库')) {
+        return <AntIcons.DatabaseOutlined />;
+      } else if (title.includes('工具') || title.includes('技术')) {
+        return <AntIcons.ToolOutlined />;
+      } else if (title.includes('团队') || title.includes('协作')) {
+        return <AntIcons.TeamOutlined />;
+      }
+    }
+    
+    // 默认图标
+    return <AntIcons.RocketOutlined />;
   };
 
   // 获取CTA按钮类型样式
@@ -500,7 +524,7 @@ const Home = () => {
                   bordered={false}
                 >
                   <IconWrapper>
-                    {getIconComponent(service.icon)}
+                    {getIconComponent(service.icon, service.title)}
                   </IconWrapper>
                   <Paragraph>
                     {service.description}

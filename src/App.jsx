@@ -13,13 +13,13 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Install from './pages/Install';
 import DynamicPage from './pages/DynamicPage';
-import DebugPanel from './components/DebugPanel';
+// 移除 DebugPanel 导入
 import { API_URL } from '../config';
 
 function App() {
   const [customPages, setCustomPages] = useState([]);
   const [siteConfig, setSiteConfig] = useState({});
-  const [showDebug, setShowDebug] = useState(false);
+  // 移除 showDebug 状态
   const [loading, setLoading] = useState(false);
 
   // 获取网站配置
@@ -88,14 +88,6 @@ function App() {
     fetchCustomPages();
   }, []);
 
-  // 检查URL是否包含debug=true参数
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('debug') === 'true') {
-      setShowDebug(true);
-    }
-  }, []);
-
   return (
     <Router>
       <div className="app">
@@ -109,7 +101,6 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/install" element={<Install />} />
-            <Route path="/debug" element={<DebugPanel />} /> {/* 修改为使用 DebugPanel 组件 */}
             {/* 动态加载自定义页面 */}
             {!loading && customPages.map(page => (
               <Route
@@ -121,9 +112,6 @@ function App() {
           </Routes>
         </div>
         <Footer />
-        
-        {/* 调试面板，可通过URL参数激活或在开发环境中显示 */}
-        {(showDebug || process.env.NODE_ENV === 'development') && <DebugPanel />}
       </div>
     </Router>
   );

@@ -5,7 +5,6 @@ import { MailOutlined, PhoneOutlined, EnvironmentOutlined, GlobalOutlined, SendO
 // 引入IconPark的Tiktok图标
 import { Tiktok } from '@icon-park/react';
 import AMapLoader from '@amap/amap-jsapi-loader';
-import DebugPanel from '../components/DebugPanel'; // 导入调试面板组件
 
 // 尝试导入配置文件，如果失败则使用默认配置
 let captchaConfig;
@@ -510,9 +509,6 @@ const Contact = () => {
           爱奇吉团队都期待着与您沟通交流，共创价值。
         </Paragraph>
       </div>
-
-      {/* 在开发环境中添加调试面板 */}
-      {process.env.NODE_ENV === 'development' && <DebugPanel />}
     </ContactContainer>
   );
 };
