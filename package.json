@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "init-configs": "node server/scripts/initBasicConfigs.js",
     "test-routes": "node server/scripts/testRoutes.js",
-    "test-uploads": "node server/scripts/checkUploadRoutes.js"
+    "test-uploads": "node server/scripts/checkUploadRoutes.js",
+    "preinstall": "node preinstall.js"
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",

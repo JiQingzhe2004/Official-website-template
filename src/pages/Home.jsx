@@ -253,6 +253,23 @@ const LoadingContainer = styled.div`
 // API基础URL
 import { API_URL } from '../config';
 
+// 添加处理图片URL的辅助函数
+const getImageUrl = (imageUrl) => {
+  if (!imageUrl) return null;
+  
+  // 如果是完整URL则直接返回
+  if (imageUrl.startsWith('http')) {
+    return imageUrl;
+  }
+  
+  // 直接使用前端静态资源路径
+  if (imageUrl.startsWith('/')) {
+    return `${process.env.PUBLIC_URL || ''}${imageUrl}`;
+  } else {
+    return `${process.env.PUBLIC_URL || ''}/${imageUrl}`;
+  }
+};
+
 const Home = () => {
   const [carousels, setCarousels] = useState([]);
   const [services, setServices] = useState([]);
@@ -493,7 +510,10 @@ const Home = () => {
             arrows={true}
           >
             {carousels.map(item => (
-              <CarouselSlide key={item.id} imageUrl={item.imageUrl}>
+              <CarouselSlide 
+                key={item.id} 
+                imageUrl={getImageUrl(item.imageUrl)}
+              >
                 <SlideContent>
                   <SlideTitle>{item.title}</SlideTitle>
                   <SlideDescription>
