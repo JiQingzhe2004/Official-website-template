@@ -308,13 +308,11 @@ const Navbar = ({ siteConfig: propsSiteConfig }) => {
       return siteConfig.logo;
     }
     
-    // 根据服务器静态文件配置构建正确的URL
-    if (siteConfig.logo.startsWith('/uploads/')) {
-      return `${STATIC_URL}${siteConfig.logo}`;
-    } else if (siteConfig.logo.startsWith('/')) {
-      return `${STATIC_URL}/uploads${siteConfig.logo}`;
+    // 直接使用前端静态资源路径
+    if (siteConfig.logo.startsWith('/')) {
+      return `${process.env.PUBLIC_URL || ''}${siteConfig.logo}`;
     } else {
-      return `${STATIC_URL}/uploads/${siteConfig.logo}`;
+      return `${process.env.PUBLIC_URL || ''}/${siteConfig.logo}`;
     }
   };
 

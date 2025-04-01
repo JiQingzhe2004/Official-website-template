@@ -8,11 +8,15 @@ import SiteConfig from '../models/SiteConfig.js';
 
 const router = express.Router();
 
-// 配置multer以处理文件上传
+// 前端项目的根目录路径 - 根据实际项目结构调整
+const frontendRoot = path.resolve('..'); // 假设后端项目和前端项目是同级目录
+
+// 配置multer以处理文件上传 - 将文件直接保存到前端项目的public目录
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    // 确保上传目录存在
-    const uploadDir = path.resolve('public', 'uploads');
+    // 上传到前端项目的public/uploads目录
+    const uploadDir = path.join(frontendRoot, 'public', 'uploads');
+    console.log('上传目录:', uploadDir);
     fs.mkdirSync(uploadDir, { recursive: true });
     cb(null, uploadDir);
   },
@@ -55,17 +59,17 @@ router.all('*', (req, res, next) => {
 router.get('/test', (req, res) => {
   try {
     console.log('处理上传测试请求');
-    // 检查上传目录是否存在
-    const uploadDir = path.resolve('public', 'uploads');
+    // 检查前端上传目录是否存在
+    const uploadDir = path.join(frontendRoot, 'public', 'uploads');
     let dirExists = fs.existsSync(uploadDir);
     
     if (!dirExists) {
       try {
         fs.mkdirSync(uploadDir, { recursive: true });
         dirExists = true;
-        console.log('上传目录创建成功:', uploadDir);
+        console.log('前端上传目录创建成功:', uploadDir);
       } catch (mkdirError) {
-        console.error('创建上传目录失败:', mkdirError);
+        console.error('创建前端上传目录失败:', mkdirError);
       }
     }
     
@@ -99,9 +103,10 @@ router.get('/test', (req, res) => {
       path: req.path,
       method: req.method,
       uploadsDir: uploadDir,
+      frontendRoot: frontendRoot,
       dirExists: dirExists,
       isWritable: isWritable,
-      publicDirExists: fs.existsSync(path.resolve('public')),
+      publicDirExists: fs.existsSync(path.join(frontendRoot, 'public')),
       uploadedFiles: uploadedFiles
     });
   } catch (error) {
@@ -129,7 +134,7 @@ router.post('/', upload.single('file'), async (req, res) => {
       });
     }
 
-    // 获取上传文件的相对路径
+    // 获取上传文件的相对路径 - 直接使用前端可访问的路径
     const filePath = `/uploads/${req.file.filename}`;
     
     // 如果请求中包含键名，自动更新对应的配置
@@ -148,8 +153,8 @@ router.post('/', upload.single('file'), async (req, res) => {
       success: true,
       message: '图片上传成功',
       filePath,
-      imageUrl: filePath, // 添加imageUrl字段以兼容carousel/upload响应格式
-      fullPath: `${req.protocol}://${req.get('host')}${filePath}`
+      imageUrl: filePath,
+      fullPath: `/uploads/${req.file.filename}` // 返回前端可直接访问的路径
     });
   } catch (error) {
     console.error('图片上传失败:', error);
